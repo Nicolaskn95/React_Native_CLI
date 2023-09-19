@@ -1,8 +1,11 @@
 import React from 'react';
 import TextoCentral from '../components/TextoCentral';
 
-export default props => (
+export default props => {
+  console.warn(props.route.params)
+  return (
     <TextoCentral corFundo="#9932cd">
-      Tela C
-    </TextoCentral>
-) 
+    Tela C -{'>'} {props.route.params.numero}
+  </TextoCentral>
+  )
+}
