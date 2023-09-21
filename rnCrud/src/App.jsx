@@ -4,6 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack'
 import UserList from './views/UserList'
 import UserForm from './views/UserForm'
 import { Button } from 'react-native-elements'
+import { Icon } from 'react-native-vector-icons'
 
 const Stack = createStackNavigator()
 
