@@ -20,29 +20,22 @@ import {
     Alert 
 } from 'react-native'
 
-export default class TaskList extends Component {
-    state = {
+const initialState = {
         showAddTask: false,
         visibleTasks: [],
         showDoneTasks: true,
-        tasks: [
-            {
-                id: Math.random(),
-                desc: 'Comprar Livro de React Native',
-                estimateAt: new Date(),
-                doneAt: new Date(),
-            },
-            {
-                id: Math.random(),
-                desc: 'Ler Livro de React Native',
-                estimateAt: new Date(),
-                doneAt: null,    
-            }
-                ]
+        tasks: []
+}
+
+export default class TaskList extends Component {
+    state = {
+        ...initialState
     }
 
-    componentDidMount = () => {
-        this.filterTasks()
+    componentDidMount = async () => {
+       const stateString = await AsyncStorage.getItem('taskState')
+       const state = JSON.parse(stateString) || initialState
+       this.setState(state, this.filterTasks)
     }
 
     toggleFilter = () => {
@@ -58,6 +51,7 @@ export default class TaskList extends Component {
             visibleTasks = this.state.tasks.filter(pending)
         }
         this.setState({visibleTasks})
+        AsyncStorage.setItem('taskState', JSON.stringify(this.state))
     }
 
     toggleTask = taskId => {
